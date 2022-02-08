@@ -1,0 +1,13 @@
+Vehicle inheritance example.
+This example explains the inheritance in the part where our classes go and car extends its components of the vehicle class,
+which is the base class of this example and shares its methods with the other classes.
+
+Whenever we want to resolve the inheritance paradigm, we must take into account the answer to the question is it a?
+My truck is a vehicle and my car is a vehicle, this means that the parent class will be a vehicle.
+
+Employees inheritance example.
+In this example, our parent class is the class employees since answering again the question is it a?
+We can realize that a boss will always be an employee, who will have some more particular characteristics but
+will always share those of an employee
+
+
