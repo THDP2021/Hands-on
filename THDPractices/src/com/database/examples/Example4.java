@@ -15,11 +15,8 @@ public class Example4 {
             try  {
                 ConnectionManager.getInstance().getConnection();
                 List<Object> params = new ArrayList<>();
-                int id=1;
-                params.add("New name");
-                params.add(id);
-                int rows = ConnectionManager.getInstance().executeUpdate(
-                        "UPDATE users SET name = ?  WHERE id = ?", params);
+                // TODO: Change the name of the user with id 1, remember, you only need to map the parameters and complete the SQL statement.
+                int rows = ConnectionManager.getInstance().executeUpdate("UPDATE users SET ", params);
                 System.out.println("Added: " + rows + " rows.");
             } catch (Exception e) {
                 System.err.println(e);

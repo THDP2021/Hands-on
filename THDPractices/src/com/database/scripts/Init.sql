@@ -1,3 +1,8 @@
+-- Use this lines of SQL in order to initialize the database tables and data.
+-- We considerate this 3 basic tables for the practices, but if you need to
+-- create other ones, you are free to connect to the database and perform
+-- the desired operations.
+
 create table users (
 id int(6) auto_increment,
 name varchar(30) not null,

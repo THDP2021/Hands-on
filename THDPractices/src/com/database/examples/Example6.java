@@ -12,9 +12,9 @@ public class Example6 {
         System.out.println("Welcome to Java Database Hands-On Example Six - JOINS");
         try  {
             ConnectionManager.getInstance().getConnection();
-            rs = ConnectionManager.getInstance()
-                    .executeQuery("SELECT users.name, providers.name AS provider_name FROM users " +
-                                    "LEFT JOIN providers ON users.id = providers.id ORDER BY users.name");
+            // TODO: Build a query and retrieve the user and the provider name, these tables are linked with the id column.
+            // Please use left join on the query.
+            rs = ConnectionManager.getInstance().executeQuery("");
             while (rs.next()) {
                 System.out.println("> " + rs.getString("name") +
                         "-" + rs.getString("provider_name"));

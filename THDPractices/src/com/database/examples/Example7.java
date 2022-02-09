@@ -14,15 +14,11 @@ public class Example7 {
         System.out.println("Welcome to Java Database Hands-On Example Four - ADVANCED SELECT QUERY");
         try  {
             List<Object> params = new ArrayList<>();
-            params.add(2); // ID
-            params.add(10); // AMOUNT
+            // TODO: Retrieve the name and amount of the products with provider id 2 and with amount higher than 10, then print them.
             ConnectionManager.getInstance().getConnection();
-            rs = ConnectionManager.getInstance()
-                    .executeQuery("SELECT name, amount  FROM products WHERE provider_id = ? AND amount > ? ORDER BY name" ,
-                            params);
+            rs = ConnectionManager.getInstance().executeQuery("", params);
             while (rs.next()) {
-                System.out.println("> " + rs.getString("name") +
-                                    "-" + rs.getInt("amount"));
+                // Print section
             }
         } catch (Exception e) {
             System.err.println(e);

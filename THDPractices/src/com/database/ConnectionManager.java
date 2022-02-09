@@ -1,162 +1,34 @@
-<<<<<<< HEAD
-//package com.database;
-//
-//import sun.rmi.registry.RegistryImpl_Stub;
-//
-//import java.sql.*;
-//import java.util.List;
-//import java.util.function.Function;
-//
-//public class ConnectionManager {
-//
-//    private static ConnectionManager instance = null;
-//
-//    private final String USERNAME = "sql5455114";
-//    private final String PASSWORD = "tlp2rWRT7r";
-//    private final String CONN_STRING = "jdbc:mysql://sql5.freemysqlhosting.net/sql5455114";
-//
-//    private Connection conn = null;
-//    private Statement statement = null;
-//    private PreparedStatement st = null;
-//
-//    private ConnectionManager() {
-//
-//    }
-//
-//    public static ConnectionManager getInstance() {
-//        if (instance == null) {
-//            instance = new ConnectionManager();
-//        }
-//        return instance;
-//    }
-//
-//    private boolean openConnection()
-//    {
-//        try {
-//            conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
-//            return true;
-//        }
-//        catch (SQLException e) {
-//            System.err.println(e);
-//            return false;
-//        }
-//
-//    }
-//
-//    public Connection getConnection()
-//    {
-//        if (conn == null) {
-//            if (openConnection()) {
-//                //Connection opened
-//                return conn;
-//            } else {
-//                return null;
-//            }
-//        }
-//        return conn;
-//    }
-//
-//    public ResultSet executeQuery(String query) throws SQLException {
-//        statement = conn.createStatement();
-//        return statement.executeQuery(query);
-//    }
-//
-//    public ResultSet executeQuery(String query, List<Object> params) throws Exception {
-//        st = conn.prepareStatement(query);
-//        long paramCount = query.codePoints().filter(ch -> ch == '?').count();
-//        if(paramCount != params.size()){
-//            throw new Exception("The number of parameters included on the query String is not equals to the number of parameters on the List.");
-//        }
-//        int index = 1;
-//        for(Object o : params){
-//            String type = o.getClass().getSimpleName();
-//            switch(type.toUpperCase()){
-//                case "INTEGER":
-//                    st.setInt(index, (int) o);
-//                    break;
-//                case "STRING":
-//                    st.setString(index, (String) o);
-//                    break;
-//            }
-//            index++;
-//        }
-//        return  st.executeQuery();
-//    }
-//
-//    public int executeUpdate(String query, List<Object> params) throws Exception {
-//        st = conn.prepareStatement(query);
-//        long paramCount = query.codePoints().filter(ch -> ch == '?').count();
-//        if(paramCount != params.size()){
-//            throw new Exception("The number of parameters included on the query String is not equals to the number of parameters on the List.");
-//        }
-//        int index = 1;
-//        for(Object o : params){
-//            String type = o.getClass().getSimpleName();
-//            switch(type.toUpperCase()){
-//                case "INTEGER":
-//                    st.setInt(index, (int) o);
-//                    break;
-//                case "STRING":
-//                    st.setString(index, (String) o);
-//                    break;
-//            }
-//            index++;
-//        }
-//        return st.executeUpdate();
-//    }
-//
-//    public void close() {
-//        //Closing connection
-//        try {
-//            try{
-//                statement.close();
-//            } catch(Exception e){
-//                // Print error
-//            }
-//            try{
-//                st.close();
-//            } catch(Exception e){
-//                // Print error
-//            }
-//            conn.close();
-//            conn = null;
-//        } catch (Exception e) {
-//        }
-//    }
-//
-//    public static void processException(SQLException e) {
-//        System.err.println("Error message: " + e.getMessage());
-//        System.err.println("Error code: " + e.getErrorCode());
-//        System.err.println("SQL state: " + e.getSQLState());
-//    }
-//
-//}
-=======
 package com.database;
-
-import sun.rmi.registry.RegistryImpl_Stub;
 
 import java.sql.*;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 public class ConnectionManager {
 
+    //This is our main connection class, here we declare our principal instance like a singleton implementation,
+    // this will be helpful, so we can always have the same instance and have efficiency.
     private static ConnectionManager instance = null;
 
+    // Here we store our database credentials, also our url for the connection, in this case, it needs to have
+    // the prefix "jdbc:mysql://" and then the ip/domain and the username after a slash.
     private final String USERNAME = "thd_ho_test";
     private final String PASSWORD = "h4nd50n3";
     private final String CONN_STRING = "jdbc:mysql://db4free.net/thd_ho_test";
 
+    // Next, once we have our singleton and our connection information stores, we initialize some helpful
+    // objects, they will build our querys or transactions.
     private Connection conn = null;
     private Statement statement = null;
     private PreparedStatement st = null;
 
+    // There is an empty constructor, so we can instantiate this class
     private ConnectionManager() {
 
     }
 
+    // This method will return the same instance of the singleton, if there is any created,
+    // otherwise, it will create a new instance and it will be our singleton.
     public static ConnectionManager getInstance() {
         if (instance == null) {
             instance = new ConnectionManager();
@@ -164,6 +36,8 @@ public class ConnectionManager {
         return instance;
     }
 
+    // This method will try to open the connection to the database, with the stored
+    // credentials, if there is any error we will see the output on the terminal.
     private boolean openConnection()
     {
         try {
@@ -177,6 +51,7 @@ public class ConnectionManager {
 
     }
 
+    // This method needs to be called when we instantiate our class, it will open the connection and return it.
     public Connection getConnection()
     {
         if (conn == null) {
@@ -190,11 +65,15 @@ public class ConnectionManager {
         return conn;
     }
 
+    // This method will execute a simple query and return the data in the ResultSet object.
     public ResultSet executeQuery(String query) throws SQLException {
         statement = conn.createStatement();
         return statement.executeQuery(query);
     }
 
+    // This method will execute a simple query too, but it receives a list of
+    // parameters and the method will automatically map the parameters. By now
+    // it only maps integers and strings, but it is scalable
     public ResultSet executeQuery(String query, List<Object> params) throws SQLException {
         st = conn.prepareStatement(query);
         long paramCount = query.codePoints().filter(ch -> ch == '?').count();
@@ -217,6 +96,8 @@ public class ConnectionManager {
         return  st.executeQuery();
     }
 
+    // This method will execute a transaction, no matter if it is insert, update or delete, also
+    // it receives a list of parameters and auto map them too, as mentioned before, it is scalable.
     public int executeUpdate(String query, List<Object> params) throws SQLException {
         st = conn.prepareStatement(query);
         long paramCount = query.codePoints().filter(ch -> ch == '?').count();
@@ -239,6 +120,7 @@ public class ConnectionManager {
         return st.executeUpdate();
     }
 
+    // This method will call a stored function from the database, and auto map the output result and the input parameters.
     public Object callFunction(Map<Integer, String> outParam, Map<Integer, Object> params, String query) throws SQLException {
         // Validations
         long paramCount = query.codePoints().filter(ch -> ch == '?').count();
@@ -317,6 +199,8 @@ public class ConnectionManager {
         return rOut;
     }
 
+    // As the previous method, this one will map the input params, but the difference here
+    // is that this method will call a stored procedure, o we don't have any output params.
     public void callProcedure(Map<Integer, Object> params, String query) throws SQLException {
         // Validations
         long paramCount = query.codePoints().filter(ch -> ch == '?').count();
@@ -354,6 +238,8 @@ public class ConnectionManager {
         System.out.println("Query executed");
     }
 
+    // This final method will close the connection and the statement if its opened, this method needs
+    // to be called every time we call a query or transaction.
     public void close() {
         //Closing connection
         try {
@@ -373,11 +259,4 @@ public class ConnectionManager {
         }
     }
 
-    public static void processException(SQLException e) {
-        System.err.println("Error message: " + e.getMessage());
-        System.err.println("Error code: " + e.getErrorCode());
-        System.err.println("SQL state: " + e.getSQLState());
-    }
-
 }
->>>>>>> 934aa81c2dcdbf0d4b918fb59839b7bd267589f9

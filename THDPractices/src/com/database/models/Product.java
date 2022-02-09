@@ -2,6 +2,9 @@ package com.database.models;
 
 public class Product {
 
+    // This model belongs to products table.
+    // Here we have some basic attributes in order to map the table columns, and a simple constructor.
+
     private Integer id;
     private Integer providerId;
     private Integer userId;

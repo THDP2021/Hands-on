@@ -14,8 +14,8 @@ public class Example5 {
         try  {
             ConnectionManager.getInstance().getConnection();
             List<Object> params = new ArrayList<>();
-            params.add("Saul");
-            int rows = ConnectionManager.getInstance().executeUpdate("DELETE FROM providers WHERE name = ?", params);
+            // TODO: Delete a row from providers table with the name "Saul", remember to only map the parameters and build the query.
+            int rows = ConnectionManager.getInstance().executeUpdate("DELETE FROM ", params);
             if(rows > 0){
                 System.out.println("QUERY EXECUTED");
             }else{
