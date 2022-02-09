@@ -2,6 +2,9 @@ package com.thd.springapi.APIPractice.Model;
 
 public class Book {
 
+    // This is the model we'll use to map our Books from the NYT public API
+    // It contains their attributes and two simple constructors
+
     private String title;
     private String author;
     private String publisher;
